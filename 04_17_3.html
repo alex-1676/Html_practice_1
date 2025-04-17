@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>휴먼 여행사</title>
+    <style>
+        .head {
+            width: 1000px;
+            height: 70px;
+            background-color: rgb(72, 87, 124);
+            display: flex;
+            margin-left: 140px;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 30px;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+        }
+        #aa{
+            margin-top: 10px;
+            margin-left: 138px;
+            font-size: 24px;
+        }
+        .row2 {
+            display: flex;
+           
+            width: 1000px;
+            margin-left: 140px;
+            margin-top: 30px;
+            gap: 40px; /*자식 요소 간 간격*/
+        }
+        .row2 > div {
+            
+            font-size: 20px;
+            display: flex;
+            gap: 5px;
+         }
+         .row2 > div input{
+           border-color:  rgb(72, 87, 124);
+           border-width: 5px;
+         }
+         .row2 > div:first-child input{
+            
+            width: 250px;
+         }
+         #registerBtn{
+            background-color: rgb(72, 87, 124);
+            color: white;
+            cursor: pointer;
+         }
+         /*----------------------------*/
+         
+        .row3 {
+            display: flex;
+            width: 1000px;
+            margin-left: 140px;
+            margin-top: 20px;
+        }
+        .row3 > div {
+            flex: 1;
+            margin-right: 10px; 
+            
+        }
+        .row3 > div:last-child {
+            margin-right: 0;
+        }
+        .row3 .box {
+            border: 1px solid #ccc;
+            
+            padding: 20px;
+            border-color: rgb(72, 87, 124);
+            border-width: 4px;
+            max-height: 200px; 
+            overflow-y: auto; 
+            scroll-snap-stop: 0;
+        }
+        .row3 .box.title {
+            background-color: rgb(72, 87, 124);
+            color: white;
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 10px;
+             border: none;
+            height: auto;
+        }
+        /* .row3 .destinations label {
+            display: block;
+            margin-bottom: 30px;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        } */
+         
+        .row3 .buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 150px;
+        }
+        .row3 .buttons button {
+            width: 60px;
+            height: 40px;
+            background-color: rgb(72, 87, 124);
+            color: white;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+        }
+        .buttonr{
+            margin-top: 140px;
+            background-color: rgb(72, 87, 124);
+            color: white;
+            font-size: 18px;
+            writing-mode: vertical-rl;
+            width: 90px;
+            height: 150px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+        }
+        .subject-table {
+         width: 100%;
+         height: 200px;
+         border-collapse: collapse;
+        }
+
+        .subject-table tr {
+            border-bottom: 1px solid #ccc; 
+        }
+
+        .subject-table td {
+            padding: 5px;
+            font-family: Arial, sans-serif;
+            font-size: 15px;
+            vertical-align: middle; 
+        }
+       
+    </style>
+</head>
+<body>
+    <div class="head">수강신청 프로그램</div>
+    <div id="aa">교과목 등록</div>
+    <div class="row2">
+        <div>교과목 <input type="text" id="row2_1"></div>
+        <div>강의실<input type="text" id="row2_2"></div>
+        <div>교수명<input type="text" id="row2_3"></div>
+        <button id="registerBtn">등록</button>
+    </div>
+
+    <div class="row3">
+        <div class="left-section">
+            <div class="box title">교과목</div>
+            <div class="box destinations">
+                <table class="subject-table"></table>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button id="torightBtn">>></button>
+            <button id="toleftBtn"><<</button>
+        </div>
+
+        <div class="middle-section">
+            <div class="box title">선택한 교과목</div>
+            <div class="box middle">
+                <table class="subject-table"></table>
+            </div>
+        </div>
+
+        <div class="button1">
+            <button class="buttonr" id="resultBtn" onclick="resetresult()">결과확인</button>
+        </div>
+
+        <div class="right-section">
+            <div class="box title">신청내역</div>
+            <div class="box content">
+                <table class="subject-table"></table>
+            </div>
+        </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    const resultBtn = document.getElementById('resultBtn');
+const registerBtn = document.getElementById('registerBtn');
+const toRightBtn = document.getElementById('torightBtn'); 
+const toLeftBtn = document.getElementById('toleftBtn'); 
+const leftTable = document.querySelector('.box.destinations .subject-table');
+const middleTable = document.querySelector('.box.middle .subject-table'); 
+const rightTable = document.querySelector('.box.content .subject-table'); 
+let row2_1 = document.getElementById('row2_1');
+let row2_2 = document.getElementById('row2_2');
+let row2_3 = document.getElementById('row2_3');
+
+let registeredData = [];
+
+registerBtn.addEventListener('click', () => {
+    let row2_1v = row2_1.value.trim();
+    let row2_2v = row2_2.value.trim();
+    let row2_3v = row2_3.value.trim();
+
+    
+
+    // if (!(row2_1v && row2_2v && row2_3v) ) {
+    //     alert('다 입력하세요');
+    //     return;
+    // }
+
+ 
+    //여기 객체생성
+    const data = {
+        subject: row2_1v,
+        room: row2_2v,
+        teacher: row2_3v
+    };
+    registeredData.push(data);
+
+    const row = document.createElement('tr');
+    const cell = document.createElement('td');
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'check';
+    cell.appendChild(checkbox);
+    cell.appendChild(document.createTextNode(` ${row2_1v}`));
+    row.appendChild(cell);
+    leftTable.appendChild(row);
+
+    // row2_1.value = '';
+    // row2_2.value = '';
+    // row2_3.value = '';
+
+    
+});
+
+toRightBtn.addEventListener('click', () => {
+    const checkboxes = leftTable.querySelectorAll('.check:checked');
+    
+
+    const rows = [];
+    checkboxes.forEach(checkbox => {
+        const row = checkbox.closest('tr'); 
+      
+        checkbox.checked = false;
+        rows.push(row.cloneNode(true)); 
+        row.remove(); 
+    });
+
+    rows.forEach(row => {
+        middleTable.appendChild(row); 
+    });
+});
+
+toLeftBtn.addEventListener('click', () => {
+    const checkboxes = middleTable.querySelectorAll('.check:checked');
+   
+
+    const rows = [];
+    checkboxes.forEach(checkbox => {
+        const row = checkbox.closest('tr'); 
+       
+        checkbox.checked = false;
+        rows.push(row.cloneNode(true)); 
+        row.remove(); 
+    });
+
+    rows.forEach(row => {
+        leftTable.appendChild(row); 
+    });
+});
+
+function resetresult(){
+    
+    const checkboxes = middleTable.querySelectorAll('.check:checked');
+    const rows = [];
+
+    checkboxes.forEach(checkbox=>{
+        let row = checkbox.closest('tr');
+        
+        rows.push(row); 
+    })
+    rightTable.innerHTML = '';
+    rows.forEach((row1,index)=>{
+        const subjectText = row1.firstChild.childNodes[1].textContent.trim();
+        const newRow = document.createElement('tr');
+        const newCell = document.createElement('td');
+        newCell.textContent = `${index + 1}. 과목명: ${subjectText}`;
+        newRow.appendChild(newCell);
+        rightTable.appendChild(newRow);
+    })
+}
+
+</script>
