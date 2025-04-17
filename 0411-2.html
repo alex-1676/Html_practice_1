@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개발자 박호영</title>
+    <style>
+        #orderList {
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <h1> 주문메뉴 </h1>
+    <div id="info"> </div>
+    메뉴선택<input type="text" id="inputMenu">
+    수량 <input type="text" id="intputMenuQuantity">
+    <input type="button" id="btn" onclick="order()" value="주문"><!--지시사항: 주문클릭 시 주문정보 추가-->
+    <br>
+    주문정보 <div id="order_info"></div>
+    <hr>
+    <table id="orderList">
+        <input id="all-delete" type = "checkbox" onclick="selectAll()">전체선택</input>
+        <tr>
+            <th>
+           </th>
+            <th>
+                메뉴
+            </th>
+            <th>
+                수량
+            </th>
+        </tr>
+    </table>
+    <button id="deleteBtn" onclick="delete1()">삭제</button>
+</body>
+<script>
+    var menu = ['짜장면', '볶음밥', '탕수육'];
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var menus = document.getElementById('info');
+        menus.textContent = menu.join(',');
+    });
+
+    function order() {
+        var inputMenu11 = document.getElementById('inputMenu');
+        var inputMenu = inputMenu11.value.trim();
+        // var order = document.getElementById('orderList');
+        var cnt11 =  document.getElementById('intputMenuQuantity');
+        var orderTable = document.getElementById('orderList');
+        var cnt = cnt11.value.trim();
+        var checkbox = document.createElement('input'); //전공적 : input타입의 DOM요소를 동적으로 생성하고,
+                                                        //   이를 checkbox 변수에 할당한다.
+        if (!inputMenu) {
+            alert('메뉴를 입력하세요');
+            return;
+        }
+        if (!cnt || isNaN(cnt) || Number(cnt) <= 0) {
+            alert('수량다시 입력하셈');
+            return;
+        }
+        if (!menu.includes(inputMenu)) {
+            alert('메뉴가 없슴~');
+
+        } else {
+            if (confirm(`주문메뉴: ${inputMenu} 수량: ${cnt}개`)) {
+                var row = orderTable.insertRow();
+                var cell1 = row.insertCell(0); // 체크박스
+                var cell2 = row.insertCell(1); // 메뉴
+                var cell3 = row.insertCell(2); // 수량  
+
+                checkbox.type = 'checkbox'; //DOM 요소의 속성을 설정한다. type은 체크박스의 기능적 역할을 정의
+                checkbox.className = 'orderCheckbox'; // 체크박스의 식별자 역할 - > 그룹화 및 선택 용이
+                cell1.appendChild(checkbox); //부모요소에 자식요소를 추가한다.//cell1(<td>라는 부모에 checkbox(<input>))라는 자식을 붙이는 작업.
+
+                cell2.textContent = inputMenu;
+                cell3.textContent = cnt;
+
+                // inputMenu11.value = '';
+                // cnt11.value = '';
+            }
+        }
+    }
+     
+        document.getElementById('orderList').addEventListener('click',(e)=>{
+            if(e.target.classList.contains('orderCheckbox')){
+                var allBtn = document.getElementById('all-delete');
+                var checkboxes = document.querySelectorAll('.orderCheckbox');
+                allBtn.checked = checkboxes.length>0 && Array.from(checkboxes).every(cb => cb.checked);
+            }
+        })
+        
+
+    
+
+    function selectAll() {
+        var checkboxes = document.querySelectorAll('.orderCheckbox'); // 배열이아니라 NodeList 로 반환 배열과는 비슷하지만 다름
+        //ArrayList와 비슷한듯
+        var a = document.getElementById('all-delete');
+        if(a.checked){
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = true;
+        });
+    }else{
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = false;
+        });
+    }
+}
+
+    function delete1() {
+        if (confirm("삭제하시겠습니까?")) {
+            if (confirm("진짜로?")) {
+                if (confirm("진짜진짜진짜로????")) {
+                    
+                    var orderTable = document.getElementById('orderList');
+                    var checkboxes = document.querySelectorAll('.orderCheckbox');
+                    for(var i =checkboxes.length-1 ; i >=0 ; i--){
+                        if(checkboxes[i].checked){
+                            orderTable.deleteRow(i+1)
+                        }
+                    }
+                          
+                }
+            }
+        }
+    }
+
+
+</script>
+
+</html>
