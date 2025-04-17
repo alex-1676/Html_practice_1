@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    table{
+        width:400px;
+        border: 1px solid;
+    }
+    tr, th {
+        border: 1px solid;
+        text-align: center;
+    }
+    #abcd{
+        width:400px;
+    }
+    /* .highlight {
+    background-color: yellow;
+    } */
+</style>
+<body>
+    <h2>휴먼 검색어 포털 시스템</h2>
+    <span>문제 1 <br>검색어를 입력하세요 [지사사항 있음]</span>
+    <input type="text" id="inputMenu">
+    <input type="button"id="searchBnt" value="검색"><br>
+    <span>검색어 리스트</span><br>
+    <table id = "searchtable">
+        <tr>
+            <td width=100px>1</td>
+            <td>검색어</td>
+           
+            <td><input type="button" id="deleteBtn" value="삭제"></td>
+        </tr>
+        
+    </table>
+    <table>
+        <tr>
+            <td align = "left">
+                <input type="checkbox" id="allcheck" onclick="selectAll()"> 모두 선택
+            </td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    <hr>
+    <span> 문제 2</span><br>
+    <span> 검색어를 입력하고 검색 버튼을 누르면 검색어를 찾아서 배경을 노란색으로 변경하시오. </span><br><br>
+    <div id="abcd">
+        <span id="abc">
+            한화 타선은 장단 17안타를 몰아쳐 키움 마운드를 뒤흔들었다. 채은성(5타수 3안타 1타점)과 에스테반 플로리얼(5타수 3안타 1득점), 김태연(5타수 4안타 2득점)이 안타 3개씩을 쳤고, 이도윤은 3타수 1안타 3타점으로 거들었다.
+
+            경기 초반 부터 흔들린 키움 선발 조영건은 불안한 투구 내용을 남기는 등 1⅓이닝 2피안타 3사사구 2실점을 기록, 시즌 첫 패전을 당했다.
+        </span>
+        <br>
+        찾을 문자열 <input type="text" id="sword"> <input  type="button" id="searchTextBtn" value="검색">
+       
+</body>
+</html>
+<script>
+
+    document.getElementById("searchBnt").addEventListener('click',()=>{
+        var inputMenu = document.getElementById('inputMenu');
+        var search = inputMenu.value.trim();
+        var searchtable = document.getElementById('searchtable');
+       
+        
+      if(search != ''){
+            var row = searchtable.insertRow();
+            var checkbox = document.createElement('input');
+        
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            checkbox.type = 'checkbox';
+            checkbox.className = 'searchCheckbox';
+            cell1.appendChild(checkbox);
+            
+            cell2.textContent = search;
+            cell2.className = 'names';
+
+            inputMenu.value = '';
+      }else{
+        alert('검색하셈')
+      }
+        
+    })
+
+    function selectAll(){
+        var checkboxes = document.querySelectorAll('.searchCheckbox');
+        var allcheck = document.getElementById('allcheck');
+        if(allcheck.checked){
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = true;
+        });
+         }else{
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = false;
+        });
+    }
+    }
+
+    document.getElementById('deleteBtn').addEventListener('click', () => {
+            const checkboxes = document.querySelectorAll('.searchCheckbox');
+
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    const row = checkbox.closest('tr'); //이 체크박스에서 시작해 가장 가까운 상위 <tr>요소 (테이블행)을 찾는다.
+                    if (row) {
+                        row.remove();
+                    }
+                }
+            });
+        });
+    
+    document.getElementById('inputMenu').addEventListener('change', () => {
+        var inputMenu = document.getElementById('inputMenu');
+        var inputValue = inputMenu.value.trim();
+        var names = document.querySelectorAll('.names');
+        // console.log(names);
+        // console.log(inputValue);
+        var isDuplicate = Array.from(names).every((name) => name.textContent != inputValue);
+            
+        if (!isDuplicate) {
+            alert('중복된 검색어입니다!');
+            inputMenu.value = '';
+        }
+    });
+
+    const originalText = document.getElementById('abc').textContent;
+
+    document.getElementById('searchTextBtn').addEventListener('click', () => {
+        const searchInput = document.getElementById('sword').value.trim();
+        const text11 = document.getElementById('abc');
+
+         if (searchInput === '') {
+            alert('검색어을 입력하거라!');
+            return;
+        }
+
+        // const regex = new RegExp(`(${searchInput})`, 'gi'); 
+        const highlightedText = originalText.replaceAll(searchInput, `<span style="background-color: yellow;">${searchInput}</span>`);
+
+        text11.innerHTML = highlightedText;
+    });
+    
+    
+
+</script>
