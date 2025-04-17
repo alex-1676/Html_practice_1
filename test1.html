@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 연습용</title>
+    <style>
+        body{
+            height: 80%;
+            margin: 0;
+            justify-content: center; 
+            align-items: center;
+        }
+        .container{
+           margin: 70px auto 0 150px;
+             display: flex;
+             gap: 50px;
+        }
+        label{
+            margin-right: 10px;
+        }
+        .choice-gg-cb-combo{
+            padding: 3px;
+            width: 130px;
+        }
+        .search-td{
+               width: 305px; 
+               padding: 3px;
+        }
+        .low{
+            border: 2px solid black;
+            width: 69%;
+            height: 500px;
+            margin-left: 150px;
+            justify-content: space-between;
+        }
+        .low-table{
+            border-collapse: separate;
+            border-spacing: 50px 10px;
+        }
+        .tr-font{   
+        position: relative;
+        }
+        .tr-font::after {       
+         content: '';
+          position: absolute;
+         left: 0;
+         right: 0;
+         bottom: 0;
+         height: 1px;
+         background: #050505;
+        }
+        .header-row {
+        position: relative;
+        }
+        .header-row::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 2px;
+        background: #000;
+        }
+        .header-row td {
+            font-weight: bold; /* 굵게 */
+            font-size: 16px; /* 약간 크게 */
+        }
+        .header-row td:nth-child(2) {
+                width: 80px;
+        }
+        .header-row td:nth-child(3) {
+           width: 100px; /* 상호명-주소 10px */
+        }
+        .header-row td:nth-child(4) {
+            width: 180px; /* 주소-전화번호-담당자 8px */
+        }
+        .header-row td:nth-child(5) {
+         width: 120px; /* 전화번호 */
+        }
+        .header-row td:nth-child(6) {
+        width: 100px; /* 담당자 */
+        }
+        .tr-font td{
+            font-size: 14px;   
+        }
+        .button-container{
+            margin-left: 895px;
+            display: flex;
+            gap: 15px;
+            margin-top: 5px;   
+        }
+        .button-container button{
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class = "container">
+    <div>
+    <table >
+        <tr>
+         <td>
+               도선택
+            <select class="choice-gg-cb-combo">
+                <option value=""></option>
+                <option value="gg">경기</option>
+                <option value="cb">충북</option>
+            </select>
+         </td>
+         <td>
+             시선택
+             <select class="choice-gg-cb-combo">
+            </select>
+         </td>
+        </tr>
+        <tr> 
+            <td colspan="2">
+                검색어
+                <input class="search-td" >
+            </td>
+        </tr>
+    </table>
+   </div>
+   <div>
+        <table>
+            <tr>
+                <td>
+                    <input type="radio" name="choice" value="all">
+                    전체검색    
+                 </td>
+                 <td >
+                      <input type = "radio" name="choice" value="hotel"> 호텔
+                      <input type = "radio" name="choice" value="fenshion">펜션
+                      <input type = "radio" name="choice" value="camping"> 캠핑장
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" placeholder="등록날짜시작" style="padding: 2.5px;">
+                    <button >달력</button>
+                 
+                </td>
+                <td>
+                    <input type="text" placeholder="등록날짜종료 "style="padding: 2.5px;">
+                    <button >달력</button>
+                </td>
+                <td>
+                    <button>조회</button>
+                </td>
+            </tr>
+         </table>    
+   </div>
+   
+ </div>
+   <div class="low">
+    <input type="checkbox">전체검색
+    <div>
+    <table class="low-table">
+        <tr class="header-row">
+          <td></td>
+            <td>구분</td>
+            <td>상호명</td>
+            <td>주소</td>
+             <td>전화번호</td>
+            <td>담당자</td>
+        </tr>
+        <tr class="tr-font">
+            <td><input type="checkbox"></td>
+            <td>호텔</td>
+            <td>휴먼호텔</td>
+            <td>경기도 수원시 휴먼동</td>
+             <td>010-1111-2222</td>
+            <td>홍길동</td>
+            
+        </tr>
+        <tr class="tr-font">
+            <td><input type="checkbox"></td>
+            <td>호텔</td>
+            <td>휴먼호텔</td>
+            <td>경기도 수원시 휴먼동</td>
+             <td>010-1111-2222</td>
+            <td>홍길동</td>
+            
+        </tr>
+        <tr class="tr-font">
+            <td><input type="checkbox"></td>
+            <td>호텔</td>
+            <td>휴먼호텔</td>
+            <td>경기도 수원시 휴먼동</td>
+             <td>010-1111-2222</td>
+            <td>홍길동</td>
+            
+        </tr>
+        <tr class="tr-font">
+            <td><input type="checkbox"></td>
+            <td>호텔</td>
+            <td>휴먼호텔</td>
+            <td>경기도 수원시 휴먼동</td>
+             <td>010-1111-2222</td>
+            <td>홍길동</td>
+            
+        </tr>
+        <tr class="tr-font">
+            <td><input type="checkbox"></td>
+            <td>호텔</td>
+            <td>휴먼호텔</td>
+            <td>경기도 수원시 휴먼동</td>
+             <td>010-1111-2222</td>
+            <td>홍길동</td>
+            
+        </tr>        
+    </table>
+   </div> 
+</div>
+<div class="button-container">
+    <button style=>삭제</button>
+    <button>엑셀변환</button>
+   </div>  
+</body>
+</html>
