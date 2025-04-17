@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .head{
+            width: 1000px;
+            height: 70px;
+            background-color: rgb(72, 87, 124);
+            display: flex;
+            margin-left: 140px;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 30px;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            margin-top: 60px;
+        }
+
+        .aa{
+            margin-left: 135px;
+            font-size: 28px;
+            font-family: Arial, sans-serif;
+            margin-top: 10px;
+        }
+
+        .row1{
+            width: 1000px;
+            display: flex;
+            margin-left: 135px;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .row1 > div {
+            font-size: 20px;
+            display: flex;
+            gap: 5px;
+        }
+
+         .row1 > div input{
+            border-color: rgb(72, 87, 124);
+            border-width: 5px;
+        }
+
+        .row1 > div:first-child input{
+            width: 250px;
+         }
+
+        #rbtn{
+            background-color:rgb(72, 87, 124);
+            color: white;
+            cursor: pointer;
+            margin-left: 20px
+        }
+
+        .row2{
+            margin-top: 40px;
+            margin-left: 140px;
+            display: flex;
+            gap: 20px;
+        }
+        .boxtitle{
+            background-color: rgb(72, 87, 124);
+            color: white;
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 10px;
+             border: none;
+            height: auto;
+            width: 180px;
+        }
+        .left-section{
+            
+            border: 5px solid rgb(72, 87, 124);
+            width: 200px; /* 너비 설정 */
+            height: 300px;
+        }
+        .buttons{
+            margin-top: 100px;
+            
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .buttons button{
+             background-color:rgb(106, 125, 172); 
+             width: 60px;
+             height: 60px;
+             font-size: 20px; 
+             cursor: pointer;  
+             color: azure;
+        }
+        .middle-section{
+            
+            border: 5px solid rgb(72, 87, 124);
+            width: 200px; /* 너비 설정 */
+            height: 300px;
+        }
+        .resultBtn2{
+            cursor: pointer;
+            background-color:rgb(106, 125, 172); 
+            width: 50px;
+            height: 120px;
+            font-size: 20px;
+            margin-top: 100px; 
+            color: white;   
+        }
+        .right-section{
+            border: 5px solid rgb(72, 87, 124);
+            width: 400px; /* 너비 설정 */
+            height: 300px;
+        }
+        .content{
+            height: 250px;
+            overflow-y: auto;
+        }
+        .rightContent{
+            height: 400px;
+            overflow-y: auto;
+        }
+        #rightbox{
+            width: 380px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="head">수강신청 프로그램</div>
+    <div class="aa">교과목 등록</div>
+    <!--첫쨰줄-->
+    <div class = "row1">
+        <div>교과목<input type="text" id="subject"></div>
+        <div>강의실<input type="text" id="room"></div>
+        <div>교수명<input type="text" id="teacher"></div>
+        <button id="rbtn">등록</button>
+    </div>
+    <div class="row2">
+        <!--왼쪽-->
+        <div class="left-section">
+            <div class="boxtitle">교과목</div>
+            <div class=" content leftContent">
+                <table class="lefttable" id="lefttable"></table>
+            </div>    
+        </div>
+        <!--화살표 버튼들-->
+        <div class="buttons">
+             <button class="torightBtn" id="torightBtn">>></button>
+             <button class="toleftBtn" id="toleftBtn"> << </button>    
+        </div>
+        <!--중간-->
+        <div class="middle-section">
+            <div class="boxtitle">선택한 교과목</div>
+            <div class="content middleContent">
+                <table class="middletable" id="middletable"></table>
+            </div>    
+        </div>
+        <!--선택확인 버튼-->
+        <div class="resultBtn"><button class="resultBtn2" id="resultBtn2"> 선택확인</button></div>
+            <!--오른쪽-->
+        <div class="right-section">
+            <div class="boxtitle" id="rightbox">신청내역</div>
+            <div class="content rightContent">
+                <table class="righttable" id="righttable"></table>
+            </div>    
+        </div>
+
+    </div>
+</body>
+</html>
+<script>
+    const subject = document.getElementById('subject');
+    const room = document.getElementById('room');
+    const teacher = document.getElementById('teacher');
+
+    const registerBtn = document.getElementById('rbtn');
+    const toRightBtn = document.getElementById('torightBtn');
+    const toLeftBtn = document.getElementById('toleftBtn');
+
+    const leftTable = document.getElementById('lefttable');
+    const middleTable = document.getElementById('middletable');
+    const rightTable = document.getElementById('righttable');
+    const resultBtn = document.getElementById('resultBtn2');
+
+    let datas = [];
+
+    registerBtn.addEventListener('click',()=>{
+        let subjectv = subject.value;
+        let roomv = room.value;
+        let teacherv = teacher.value;
+        if(subject.value && room.value && teacher.value){
+            const data = {
+                subject: subjectv,
+                room: roomv,
+                teacher: teacherv
+             };
+             datas.push(data);
+             const checkbox = document.createElement('input');
+             checkbox.type = 'checkbox';
+             checkbox.className = 'check';
+
+             let newRow = leftTable.insertRow();
+             newRow.setAttribute('data-index',datas.length-1);
+             let row1 = newRow.insertCell(0);
+             let row2 = newRow.insertCell(1);
+             row1.appendChild(checkbox);
+             row2.appendChild(document.createTextNode(`${subjectv}`));  
+         }
+    })
+
+    toRightBtn.addEventListener('click',()=>{
+        const checkboxes = leftTable.querySelectorAll('.check:checked');
+        const rows = [];
+        checkboxes.forEach(checkbox =>{
+            const row = checkbox.closest('tr');
+            checkbox.checked = false;
+            rows.push(row);
+            row.remove();
+        })
+        rows.forEach(row1 =>{
+            middleTable.appendChild(row1);
+        })
+    })
+
+    toLeftBtn.addEventListener('click',()=>{
+        const checkboxes = middleTable.querySelectorAll('.check:checked');
+        const rows = [];
+        checkboxes.forEach(checkbox =>{
+            const row = checkbox.closest('tr');
+            checkbox.checked = false;
+            rows.push(row);
+            row.remove();
+        })
+        rows.forEach(row1 =>{
+            leftTable.appendChild(row1);
+        })
+    })
+
+    resultBtn.addEventListener('click',()=>{
+        rightTable.innerHTML='';
+        const checkboxes = middleTable.querySelectorAll('.check:checked');
+        const rows = [];
+        checkboxes.forEach((checkbox,index) =>{
+            const row = checkbox.closest('tr');
+            const rowsub= datas[row.getAttribute('data-index')].subject;
+           const rowroom= datas[row.getAttribute('data-index')].room;
+           const rowteacher= datas[row.getAttribute('data-index')].teacher;
+            let rightRow = rightTable.insertRow();
+            let row1 = rightRow.insertCell(0);
+            let row2 = rightRow.insertCell(1);
+            let row3 = rightRow.insertCell(2);
+            let row4 = rightRow.insertCell(3);
+            row1.appendChild(document.createTextNode(`${index + 1}. `));
+            row2.appendChild(document.createTextNode(`교과목 :${rowsub}, `));
+            row3.appendChild(document.createTextNode(`강의실 :${rowroom}, `));
+            row3.appendChild(document.createTextNode(`교수명 :${rowteacher}, `));
+            rightTable.appendChild(rightRow);
+            });
+         
+            
+    })
+
+</script>
