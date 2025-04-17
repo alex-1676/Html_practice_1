@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       .head {
+      width: 1000px;
+      height: 100px;
+      background-color: rgb(6, 167, 241);
+      display: flex;
+      margin-left: 140px;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 30px;
+      font-family: Arial, sans-serif;
+      cursor: pointer;
+    }
+    .table1{
+        margin-top: 10px;
+        margin-left: 138px;
+        width: 400px;
+        height: 50px;
+        /* background-color: rgb(211, 219, 223); */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
+    .table1 td{
+
+        height: 50px;
+            background-color: rgb(6, 167, 241);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+    }
+         .table1 td:first-child {
+            font-size: 16px;
+            width: 150px;
+        }
+        .table1 td:last-child {
+            margin-left: 15px;
+            font-size: 16px;
+            width: 500px;
+        }
+        .table2 {
+        width: 560px;
+        height: 100px;
+        margin-top: 30px;
+        margin-left: 30px;
+        border-collapse: collapse;
+        }
+        .table2 tr{
+            display: flex;
+        }
+       
+    .table2 td {
+        height: 40px;
+        width: 100px;
+        
+        background-color: rgb(6, 167, 241);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        font-size: 15px;
+        border: 1px solid white;
+        cursor: pointer;
+    }
+    .table2 tr:first-child td {
+        background-color: rgb(6, 167, 241); /* 첫 번째 행은 기존 파란색 유지 */
+    }
+    .table2 tr:nth-child(odd):not(:first-child) td {
+        background-color: rgb(205, 218, 217); /* 홀수 행(두 번째, 네 번째 등)은 빨간색 */
+        color: black;
+    }
+    .table2 tr:nth-child(even):not(:first-child) td {
+        background-color: rgb(145, 175, 201); /* 짝수 행(세 번째, 다섯 번째 등)은 파란색 */
+        color: black;
+    }
+    .table2 td:nth-child(1) {
+        width: 80px; /* 전체선택 */
+        flex: 0 0 auto;
+    }
+    .table2  td:nth-child(2) {
+        width: 80px; /* 순번 */
+        flex: 0 0 auto;
+    }
+    .table2 td:nth-child(3) {
+        width: 130px; /* 구분 */
+        flex: 0 0 auto;
+    }
+    .table2  td:nth-child(4) {
+        width: 130px; /* 단어 */
+        flex: 0 0 auto;
+    }
+    .table2 td:nth-child(5) {
+        width: 130px; /* 설명 */
+        flex: 0 0 auto;
+    }
+    #buttondelete{
+        width: 100px;
+        height: 30px;
+        margin-left: 573px;
+        background-color:rgb(6, 167, 241); 
+        color: rgb(243, 243, 243);
+        border: 1px solid white;
+        cursor: pointer;
+    }
+    #savebtn{
+        width: 100px;
+        height: 30px;
+        
+        background-color:rgb(6, 167, 241); 
+        color: rgb(243, 243, 243);
+        border: none;
+        cursor: pointer;
+    }
+    #allcheck{
+        width: 15px;
+        height: 30px;
+        
+        background-color:rgb(6, 167, 241); 
+        color: rgb(243, 243, 243);
+        border: none;
+        cursor: pointer;
+    }
+    .sequence {
+    width: 80px;
+    flex: 0 0 auto;
+    }
+    .spanspan{
+        cursor: pointer;
+        justify-content: center;
+        align-items: center;
+        background-color:rgb(6, 167, 241);
+        color: white;
+        margin-left: 5px;
+    }
+    </style>
+</head>
+<body>
+    <div class="head">휴먼 전공 용어 공부</div>
+   
+     <div style="display: flex; ">
+         <table style="margin-top: 20px;">
+             <tr class="table1">
+                  <td>단어</td>
+                  <td > <input type="text" id="word"></td>
+              </tr>
+           <tr class="table1">
+                   <td>구분</td>
+                   <td >  <select id="selectbtn">
+                    <option value=""></option>
+                    <option value="DB">DB</option>
+                    <option value="Java">Java</option>
+                    <option value="HTML">HTML</option>
+                    <option value="CSS">CSS</option>
+                    <option value="JS">JS</option>
+                </select></td>
+           </tr>
+           <tr class="table1">
+                  <td>설명</td>
+                   <td style="height: 100px ;margin-top:50px"> 
+                    <input type="text" id="des" style="height: 50px;">
+                   </td>
+           </tr>
+           <tr class="table1">
+                  <td  style="width: 100px; margin-top: 100px; margin-left: 300px;">
+                    <input type="button" id="savebtn" value="저장">
+                  </td>
+           </tr>
+        </table>
+        <table class="table2" id="tableid">
+                <tr>
+                     <td><input type ="checkbox" id="allcheck"  onclick="selectAll()">전체선택</td>
+                     <td>순번</td>
+                     <td>구분 </td>
+                     <td>단어</td>
+                     <td>설명</td>
+                </tr>
+              
+                
+              </table>
+         </div>
+        <div style="display: flex;">
+            <input type="button" value="삭제" id="buttondelete">
+             <div class="pagepage" id="pagepage" style="margin-left: 20px; display: flex;"></div>
+         </div>
+ 
+</body>
+
+</html>
+<script>
+    
+    let rowsData = []; // 전체 행 저장배열
+    let currentPage = 1; // 햔재페이지
+    const pageRows = 5; // 한 페이지에 ㅊㅍ최대5행
+
+
+function reset(page) {
+    const pagetable = document.getElementById('tableid');
+    // 기존 행 전부 지우기 (헤더부분은뺴고)
+    while (pagetable.rows.length > 1) {
+        pagetable.deleteRow(1);
+    }
+    const start = (page - 1) * pageRows;
+    const end = Math.min(start + pageRows, rowsData.length);//시작에서 5행 or 5행길이가 안되면 있는곳까지
+
+    
+    for (let i = start; i < end; i++) {
+        const data = rowsData[i];
+        const row = pagetable.insertRow(-1); // 테이블 끝에 추가 (역순은 rowsData로 처리)
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.className = 'check';
+
+        const cell1 = row.insertCell(0); // 체크박스
+        const cell2 = row.insertCell(1); // 순번
+        const cell3 = row.insertCell(2); // 구분
+        const cell4 = row.insertCell(3); // 단어
+        const cell5 = row.insertCell(4); // 설명
+
+        cell1.appendChild(checkbox);
+        cell2.className = 'sequence';
+        cell2.textContent = i + 1; 
+        cell3.textContent = data.selectbtn;
+        cell4.textContent = data.word;
+        cell5.textContent = data.des.length > 5 ? data.des.substring(0, 5) + '...' : data.des;
+    }
+
+    
+    updatePage();
+}
+
+
+function updatePage() {
+    let a = Math.ceil(rowsData.length / pageRows)
+    const totalpage = a ? a: 1;
+    const page = document.getElementById('pagepage');
+    page.innerHTML = '';
+
+    for (let i = 1; i <= totalpage; i++) {
+        const span = document.createElement('span');
+        span.className = 'spanspan';
+        span.textContent = `[${i}]`;
+        span.onclick = () => {  //for문에서 i는 각 반복마다 새로 생성된다. 
+                                // js엔진은 내부적으로 각 반복의 i를 별도의 메모리 공간에 저장하고  
+            currentPage = i;// 이건 for루프가 끝난 후에도 onclick 함수가 
+            renderTable(i); // 자신의 ifmf 참조할 수 있도록 보장한다.(캡쳐)
+        };
+        page.appendChild(span);
+    }
+}
+
+
+document.getElementById('savebtn').addEventListener('click', () => {
+    const word = document.getElementById('word').value.trim();
+    const selectbtn = document.getElementById('selectbtn').value;
+    const des = document.getElementById('des').value.trim();
+
+    if (word && selectbtn && des) {
+        
+        const oneRow = { word, selectbtn, des };
+        rowsData.unshift(oneRow); // 배열 맨 앞에 추가 (역순)
+
+      
+        document.getElementById('word').value = '';
+        document.getElementById('selectbtn').value = '';
+        document.getElementById('des').value = '';
+
+        
+        currentPage = 1;// 1페이지로 이동
+        reset(currentPage);
+    }else{
+        alert('전부다 입력하세요');
+        document.getElementById('word').value = '';
+        document.getElementById('selectbtn').value = '';
+        document.getElementById('des').value = '';
+    }
+});
+
+
+document.getElementById('buttondelete').addEventListener('click', () => {
+    const checkboxes = document.querySelectorAll('.check');
+    const deleteIndex = [];
+
+    //삭제 인덱스를 찾고 저장하기
+    checkboxes.forEach((checkbox, index) => {
+        if (checkbox.checked) {
+            const rowIndex = (currentPage - 1) * pageRows + index;
+            deleteIndex.push(rowIndex);
+        }
+    });
+
+    //역순으로 삭제 앞쪽인덱스 삭제하면 밀려서 인덱스꼬임
+    deleteIndex.sort((a, b) => b - a).forEach(index => {
+        rowsData.splice(index, 1); //array.splice(start,deleteCount,..items) //start: 변경을 시작할 인덱스 deleteCount: 제거할 요소의 개수 items:(선택)추가할 새 요소들
+    });
+
+    // 페이지 조정
+    let a =  Math.ceil(rowsData.length / pageRows);
+    const totalpage = a?a: 1;
+    if (currentPage > totalpage) {
+        currentPage = totalpage;
+    }
+
+    reset(currentPage);
+});
+
+
+document.getElementById('allcheck').addEventListener('click', () => {
+    const allcheck = document.getElementById('allcheck');
+    const checkboxes = document.querySelectorAll('.check');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = allcheck.checked;
+    });
+});
+
+
+document.getElementById('tableid').addEventListener('click', (e) => {
+    if (e.target.classList.contains('check')) {
+        const allcheck = document.getElementById('allcheck');
+        const checkboxes = document.querySelectorAll('.check');
+        allcheck.checked = checkboxes.length > 0 && Array.from(checkboxes).every(cb => cb.checked);
+    }
+});
+
+</script>
