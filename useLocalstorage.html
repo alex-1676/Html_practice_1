@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고용24</title>
+    <style>
+        .all {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+        #header {
+            color: black;
+            width: 25%;
+            text-align: center;
+            padding: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .allnew {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 200px;
+            width: 100%;
+        }
+        .search, .login {
+            border: 1px dotted;
+            border-radius: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50%;
+        }
+        .search {
+            height: 50px;
+            position: relative;
+        }
+        .search-history {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .search-history ul {
+            list-style: none;
+            padding: 8px;
+            margin: 0;
+        }
+        .search-history li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            font-size: 14px;
+            line-height: 20px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        .search-history li:last-child {
+            border-bottom: none;
+        }
+        .search-history li:hover {
+            background-color: #d6d0d0c9;
+        }
+        .search-history .delete {
+            color: #181616;
+            font-size: 14px;
+            cursor: pointer;
+            margin-left: 8px;
+            border: 1px solid rgb(27, 26, 26);
+        }
+        .search-history .delete:hover {
+            color: #eb1010;
+        }
+        input[type="text"], input[type="password"] {
+            border: transparent;
+            padding: 8px;
+            font-size: 14px;
+        }
+        input[type="button"] {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .login {
+            flex-direction: column;
+            height: 500px;
+            justify-content: center;
+        }
+        .login div {
+            display: flex;
+            gap: 10px;
+        }
+        /* 회원가입 모달 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: white;
+            width: 450px;
+            min-height: 650px;
+            padding: 30px;
+            border-radius: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .birthdate {
+            display: flex;
+            gap: 10px;
+        }
+        .modal-content h3 {
+            margin: 0 0 30px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex-grow: 1;
+        }
+        .modal-content input, .modal-content select {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .modal-content button {
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .birthdate select {
+            flex: 1;
+        }
+        .modal-content button {
+            border: 1px solid rgb(199, 189, 189);
+        }
+    </style>
+</head>
+<body>
+    <div class="all">
+        <h2 id="header" onclick="hidden1()">채용정보</h2>
+        <h2 id="header" onclick="hidden2()">취업지원</h2>
+        <h2 id="header" onclick="hidden3()">실업급여</h2>
+        <h2 id="header" onclick="hidden4()"><img src="./img/목록.png" width="20px">전체메뉴</h2>
+    </div>
+    <div class="allnew">
+        <div class="search">
+            <input type="text" id="search" placeholder="검색어 입력">
+            
+            <input type="button" id="searchbtn" onclick="search()" value="검색">
+            <div id="search-history" class="search-history">
+                <ul id="history-list"></ul>
+            </div>
+        </div>
+        <div class="login">
+            <input type="text" id="id" placeholder="id 입력"><br>
+            <input type="password" id="password" placeholder="비밀번호 입력"><br>
+            <div>
+                <input type="button" id="login" onclick="login()" value="로그인">
+                <input type="button" id="signin" onclick="signin()" value="회원가입">
+            </div>
+        </div>
+    </div>
+
+    <div id="signup-modal" class="modal">
+        <div class="modal-content">
+            <h3>회원가입</h3>
+            <form id="signup-form">
+                <div>
+                    <input type="text" id="signup-username" placeholder="아이디" required>
+                    <button type="button" class="check-duplicate">중복 확인</button>
+                </div>
+                <input type="password" id="signup-password" placeholder="비밀번호" required>
+                <input type="text" id="signup-name" placeholder="이름" required>
+                <div class="birthdate">
+                    <select id="birth-year" required>
+                        <option value="">년</option>
+                    </select>
+                    <select id="birth-month" required>
+                        <option value="">월</option>
+                    </select>
+                    <select id="birth-day" required>
+                        <option value="">일</option>
+                    </select>
+                </div>
+                <button type="submit">가입</button>
+                <button type="button" id="modal-close">취소</button>
+            </form>
+        </div>
+    </div>
+    <script>
+      
+        function birth() {
+            const yearSelect = document.querySelector('#birth-year');
+            const monthSelect = document.querySelector('#birth-month');
+            const daySelect = document.querySelector('#birth-day');
+
+            for (let y = 2010; y >= 1960; y--) {
+                const option = document.createElement('option');
+                option.value = y;
+                option.text = y;
+                yearSelect.appendChild(option);
+            }
+
+            for (let m = 1; m <= 12; m++) {
+                const option = document.createElement('option');
+                option.value = m.toString().padStart(2, '0');
+                option.text = m;
+                monthSelect.appendChild(option);
+            }
+
+            function updateDays() {
+                daySelect.innerHTML = '<option value="">일</option>';
+                const year = parseInt(yearSelect.value);
+                const month = parseInt(monthSelect.value);
+                if (!year || !month) return;
+
+                const daysInMonth = new Date(year, month, 0).getDate();
+                for (let d = 1; d <= daysInMonth; d++) {
+                    const option = document.createElement('option');
+                    option.value = d.toString().padStart(2, '0');
+                    option.text = d;
+                    daySelect.appendChild(option);
+                }
+            }
+
+            yearSelect.addEventListener('change', updateDays);
+            monthSelect.addEventListener('change', updateDays);
+        }
+        birth();
+
+       
+        function signin() {
+            const modal = document.querySelector('#signup-modal');
+            modal.style.display = 'block';
+        }
+
+        document.querySelector('#modal-close').addEventListener('click', () => {
+            const modal = document.querySelector('#signup-modal');
+            modal.style.display = 'none';
+            document.querySelector('#signup-form').reset();
+        });
+
+
+        
+        function search() {
+            const content = document.querySelector('#search').value.trim();
+            if (!content) return;
+
+            
+                let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+                searchHistory = searchHistory.filter(item => item.content !== content);
+                searchHistory.unshift({ content, timestamp: new Date().toISOString() });
+                if (searchHistory.length > 5) searchHistory.pop();
+                localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+                searchlist(); 
+           
+        }
+
+        // 검색 기록 표시
+        function searchlist() {
+            const historyList = document.querySelector('#history-list');
+            let searchHistory;
+           
+            searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+           
+            historyList.innerHTML = '';
+
+            if (searchHistory.length === 0) {
+                historyList.innerHTML = '<li>최근 검색어가 없습니다.</li>';
+            } else {
+                searchHistory.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `${item.content} (${new Date(item.timestamp).toLocaleDateString()}) <span class="delete">X</span>`;
+                    li.addEventListener('click', () => {
+                        document.querySelector('#search').value = item.content;
+                        document.querySelector('.search-history').style.display = 'none';
+                    });
+                    li.querySelector('.delete').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const updateHistory = searchHistory.filter(i => i.content !== item.content);
+                        localStorage.setItem('searchHistory', JSON.stringify(updateHistory));
+                        searchlist();
+                    });
+                    historyList.appendChild(li);
+                });
+            }
+
+            
+            document.querySelector('.search-history').style.display = 'block';
+            
+           
+        }
+
+        //검색창 포커스
+        document.querySelector('#search').addEventListener('focus', (e) => {
+            // e.stopPropagation(); // 포커스 이벤트 전파 방지
+            searchlist();
+        });
+
+        // 검색 창 변경 시 검색 기록 표시
+        document.querySelector('#search').addEventListener('input', searchlist());
+
+       
+        document.addEventListener('click', (e) => {
+            const searchHistory = document.querySelector('.search-history');
+            const searchInput = document.querySelector('#search');
+            if (!searchHistory.contains(e.target) && !searchInput.contains(e.target)) {
+                searchHistory.style.display = 'none';
+            }
+        });
+
+        
+    </script>
+</body>
+</html>
